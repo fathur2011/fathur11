@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalender Otomatis</title>
+    <style>
+        .kalender-container {
+            width: 320px;
+            text-align: center;
+            border: 2px solid black;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+        .kalender {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .hari, .nama-hari {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .nama-hari {
+            background-color: lightblue;
+        }
+        .hari-ini {
+            background-color: yellow;
+        }
+        .navigasi {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .navigasi button {
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let bulanIni = new Date().getMonth();
+        let tahunIni = new Date().getFullYear();
+
+        function generateCalendar() {
+            let kalenderElement = document.getElementById("kalender");
+            kalenderElement.innerHTML = ""; // Kosongkan kalender
+            let tanggalSekarang = new Date();
+            let hariIni = tanggalSekarang.getDate();
+            let totalHari = new Date(tahunIni, bulanIni + 1, 0).getDate();
+            let hariAwal = new Date(tahunIni, bulanIni, 1).getDay();
+            let namaHari = ["M", "S", "S", "R", "K", "J", "S"];
+            let bulanNama = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            
+            document.getElementById("bulan").innerText = bulanNama[bulanIni] + " " + tahunIni;
+            
+            // Tambahkan nama hari
+            namaHari.forEach(nama => {
+                let elemenHari = document.createElement("div");
+                elemenHari.classList.add("nama-hari");
+                elemenHari.innerText = nama;
+                kalenderElement.appendChild(elemenHari);
+            });
+
+            // Isi dengan kotak kosong sebelum tanggal 1
+            for (let i = 0; i < hariAwal; i++) {
+                let emptyBox = document.createElement("div");
+                kalenderElement.appendChild(emptyBox);
+            }
+
+            // Tambahkan tanggal
+            for (let i = 1; i <= totalHari; i++) {
+                let kotakTanggal = document.createElement("div");
+                kotakTanggal.classList.add("hari");
+                kotakTanggal.innerText = i;
+                if (i === hariIni && bulanIni === new Date().getMonth() && tahunIni === new Date().getFullYear()) {
+                    kotakTanggal.classList.add("hari-ini"); // Menandai hari ini
+                }
+                kalenderElement.appendChild(kotakTanggal);
+            }
+        }
+
+        function bulanSebelumnya() {
+            if (bulanIni === 0) {
+                bulanIni = 11;
+                tahunIni--;
+            } else {
+                bulanIni--;
+            }
+            generateCalendar();
+        }
+
+        function bulanBerikutnya() {
+            if (bulanIni === 11) {
+                bulanIni = 0;
+                tahunIni++;
+            } else {
+                bulanIni++;
+            }
+            generateCalendar();
+        }
+
+        window.onload = generateCalendar;
+    </script>
+</head>
+<body>
+    <div class="kalender-container">
+        <div class="navigasi">
+            <button onclick="bulanSebelumnya()">&#9665;</button>
+            <h3 id="bulan"></h3>
+            <button onclick="bulanBerikutnya()">&#9655;</button>
+        </div>
+        <div id="kalender" class="kalender"></div>
+    </div>
+</body>
+</html>
