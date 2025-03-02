@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fathur Ganteng</title>
+    <style>
+        @keyframes moveText {
+            0% { transform: translateX(0); }
+            35% { transform: translateX(400px); }
+            70% { transform: translateX(-400px); }
+            100% { transform: translateX(0px); }
+        }
+        body {
+            background-color: gray;
+            text-align: center;
+        }
+        .moving-text {
+            font-size: 25px;
+            font-weight: normal;
+            color: black;
+            animation: moveText 7s linear infinite;
+            position: relative;
+        }
+        .box-container {
+            display: flex;
+            justify-content: center;
+            gap: 0px;
+            margin: 15px 0;
+        }
+        .box {
+            width: 1000px;
+            height: 50px;
+            background-color: white;
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .box:hover {
+            background-color: lightgray;
+        }
+    </style>
+    <script>
+        function showDate() {
+            window.location.href = "fathur.html";
+        }
+    </script>
+</head>
+<body>
+    <div class="box-container">
+        <div class="box" onclick="showDate()">Tanggal</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+    </div>
+    <h5 class="moving-text">selamat datang di fathur ganteng</h5>
+</body>
+</html>
